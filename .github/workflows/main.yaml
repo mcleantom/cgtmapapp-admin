@@ -23,7 +23,7 @@ jobs:
       - name: Build app
         run: CI=false npm run build
         env:
-          CI: "false"
+          CI: false
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
       - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
