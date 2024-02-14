@@ -1,0 +1,289 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "CGT Map Backend API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/company": {
+      "get": {
+        "tags": [
+          "company"
+        ],
+        "summary": "Get Companies",
+        "operationId": "get_companies_company_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Get Companies Company Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "company"
+        ],
+        "summary": "Create Company",
+        "operationId": "create_company_company_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCompanyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/company/{company_id}": {
+      "delete": {
+        "tags": [
+          "company"
+        ],
+        "summary": "Delete Company",
+        "operationId": "delete_company_company__company_id__delete",
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Company Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CompanyResponse": {
+        "properties": {
+          "_id": {
+            "type": "string",
+            "title": " Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "position": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "category": {
+            "$ref": "#/components/schemas/ECompanyCategory"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "website": {
+            "type": "string",
+            "maxLength": 2083,
+            "minLength": 1,
+            "format": "uri",
+            "title": "Website"
+          },
+          "logo": {
+            "type": "string",
+            "maxLength": 2083,
+            "minLength": 1,
+            "format": "uri",
+            "title": "Logo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "position",
+          "category",
+          "description",
+          "website",
+          "logo"
+        ],
+        "title": "CompanyResponse"
+      },
+      "CreateCompanyRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "position": {
+            "$ref": "#/components/schemas/Point"
+          },
+          "category": {
+            "$ref": "#/components/schemas/ECompanyCategory"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "website": {
+            "type": "string",
+            "maxLength": 2083,
+            "minLength": 1,
+            "format": "uri",
+            "title": "Website"
+          },
+          "logo": {
+            "type": "string",
+            "maxLength": 2083,
+            "minLength": 1,
+            "format": "uri",
+            "title": "Logo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "position",
+          "category",
+          "description",
+          "website",
+          "logo"
+        ],
+        "title": "CreateCompanyRequest"
+      },
+      "ECompanyCategory": {
+        "type": "string",
+        "enum": [
+          "Consulting",
+          "Accelerator",
+          "Startup"
+        ],
+        "title": "ECompanyCategory"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Point": {
+        "properties": {
+          "type": {
+            "const": "Point",
+            "title": "Type",
+            "default": "Point"
+          },
+          "coordinates": {
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array",
+            "maxItems": 2,
+            "minItems": 2,
+            "title": "Coordinates"
+          }
+        },
+        "type": "object",
+        "required": [
+          "coordinates"
+        ],
+        "title": "Point"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
