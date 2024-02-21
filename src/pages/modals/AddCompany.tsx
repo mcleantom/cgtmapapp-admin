@@ -23,7 +23,6 @@ const AddCompany: React.FC<AddCompanyProps> = ({ isOpen, onClose, id }) => {
         handleSubmit,
         formState: { isSubmitting },
         register,
-        formState: { errors }
     } = useForm();
 
     const onSubmit = async (values: any) => {
