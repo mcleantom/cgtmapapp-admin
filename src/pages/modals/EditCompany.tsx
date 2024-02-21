@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react';
+import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast } from '@chakra-ui/react';
 
 import { useCompaniesStore } from '../../store/companies-store';
 import { useForm } from 'react-hook-form';
@@ -8,30 +8,33 @@ import { useForm } from 'react-hook-form';
 interface EditCompanyProps {
     isOpen: boolean;
     onClose: () => void;
-    id: string;
+    id: number;
 }
 
-
 const EditCompany: React.FC<EditCompanyProps> = ({ isOpen, onClose, id }) => {
-    const { companies } = useCompaniesStore();
-    const thisCompany = companies.find((company) => company._id === id);
+    const toast = useToast();
+    const { companies, updateCompany } = useCompaniesStore();
+    const thisCompany = companies.find((company) => company.id === id);
+    
     const {
         handleSubmit,
         formState: { isSubmitting },
-        reset,
         register
     } = useForm();
 
     const onSubmit = (values: any) => {
-        return new Promise((resolve: any) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2))
-              reset();
-              resolve()
-            }, 500)
-        })
+        values.position.type = "Point";
+        updateCompany(id, values)
+            .then(() => onClose())
+            .catch((err) => {
+                toast({
+                    title: 'Error',
+                    description: 'Failed to update company: ' + err,
+                    status: 'error',
+                    isClosable: true
+                });
+            });
     }
-
 
     return (
         <>
@@ -61,7 +64,7 @@ const EditCompany: React.FC<EditCompanyProps> = ({ isOpen, onClose, id }) => {
                                     placeholder='Latitude'
                                     defaultValue={thisCompany?.position.coordinates[0]}
                                     type='number'
-                                    {...register("latitude", { required: true })}
+                                    {...register("position.coordinates[0]", { required: true })}
                                 />
                             </FormControl>
                             <FormControl>
@@ -70,7 +73,7 @@ const EditCompany: React.FC<EditCompanyProps> = ({ isOpen, onClose, id }) => {
                                     placeholder='Longitude'
                                     defaultValue={thisCompany?.position.coordinates[1]}
                                     type='number'
-                                    {...register("longitude", { required: true })}
+                                    {...register("position.coordinates[1]", { required: true })}
                                 />
                             </FormControl>
                             <FormControl>

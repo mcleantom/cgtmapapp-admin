@@ -1,34 +1,12 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "CGT Map Backend API",
+    "title": "CGT Map Backend",
+    "description": "Backend for the CGT Map application",
     "version": "0.1.0"
   },
   "paths": {
     "/company": {
-      "get": {
-        "tags": [
-          "company"
-        ],
-        "summary": "Get Companies",
-        "operationId": "get_companies_company_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/CompanyResponse"
-                  },
-                  "type": "array",
-                  "title": "Response Get Companies Company Get"
-                }
-              }
-            }
-          }
-        }
-      },
       "post": {
         "tags": [
           "company"
@@ -36,14 +14,14 @@
         "summary": "Create Company",
         "operationId": "create_company_company_post",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateCompanyRequest"
+                "$ref": "#/components/schemas/CompanyCreate"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -51,7 +29,62 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CompanyResponse"
+                  "$ref": "#/components/schemas/CompanyInDB"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "company"
+        ],
+        "summary": "Read Companies",
+        "operationId": "read_companies_company_get",
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Skip"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompanyInDB"
+                  },
+                  "title": "Response Read Companies Company Get"
                 }
               }
             }
@@ -70,6 +103,56 @@
       }
     },
     "/company/{company_id}": {
+      "put": {
+        "tags": [
+          "company"
+        ],
+        "summary": "Update Company",
+        "operationId": "update_company_company__company_id__put",
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Company Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyInDB"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": [
           "company"
@@ -82,7 +165,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string",
+              "type": "integer",
               "title": "Company Id"
             }
           }
@@ -112,12 +195,8 @@
   },
   "components": {
     "schemas": {
-      "CompanyResponse": {
+      "CompanyCreate": {
         "properties": {
-          "_id": {
-            "type": "string",
-            "title": " Id"
-          },
           "name": {
             "type": "string",
             "title": "Name"
@@ -149,7 +228,6 @@
         },
         "type": "object",
         "required": [
-          "_id",
           "name",
           "position",
           "category",
@@ -157,9 +235,9 @@
           "website",
           "logo"
         ],
-        "title": "CompanyResponse"
+        "title": "CompanyCreate"
       },
-      "CreateCompanyRequest": {
+      "CompanyInDB": {
         "properties": {
           "name": {
             "type": "string",
@@ -188,6 +266,10 @@
             "minLength": 1,
             "format": "uri",
             "title": "Logo"
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id"
           }
         },
         "type": "object",
@@ -197,9 +279,86 @@
           "category",
           "description",
           "website",
-          "logo"
+          "logo",
+          "id"
         ],
-        "title": "CreateCompanyRequest"
+        "title": "CompanyInDB"
+      },
+      "CompanyUpdate": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "position": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Point"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "category": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ECompanyCategory"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "website": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1,
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Website"
+          },
+          "logo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1,
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Logo"
+          }
+        },
+        "type": "object",
+        "title": "CompanyUpdate"
       },
       "ECompanyCategory": {
         "type": "string",

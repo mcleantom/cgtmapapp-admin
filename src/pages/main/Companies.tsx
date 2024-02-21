@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
-import { Container, Flex, Heading, Spinner, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useToast } from '@chakra-ui/react';
+import { Container, Flex, Heading, Spinner, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useDisclosure, useToast, Button } from '@chakra-ui/react';
 
 import { useCompaniesStore } from '../../store/companies-store';
 
 import ActionsMenu from '../../components/ActionsMenu';
+import AddCompany from '../modals/AddCompany';
 
 const Companies: React.FC = () => {
     const toast = useToast();
     const [isLoading, setIsLoading] = useState(false);
     const { companies, getCompanies } = useCompaniesStore();
+    const addCompanyModal = useDisclosure();
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -42,6 +44,8 @@ const Companies: React.FC = () => {
                     <Heading size="lg" color="gray.700" textAlign={{ base: "center", md: "left" }} pt={12}>
                         Companies Management
                     </Heading>
+                    <Button onClick={addCompanyModal.onOpen} colorScheme="green" size="sm" mt={4}>Add Company</Button>
+                    <AddCompany isOpen={addCompanyModal.isOpen} onClose={addCompanyModal.onClose} id={0} />
                     <TableContainer>
                         <Table size={{ base: "sm", md: "md" }} style={{borderCollapse:"separate", borderSpacing:"0 1em"}}>
                             <Thead>
@@ -59,11 +63,11 @@ const Companies: React.FC = () => {
                             </Thead>
                             <Tbody>
                                 {companies.map((company) => (
-                                    <Tr key={company._id}>
+                                    <Tr key={company.id}>
                                         <Td>
-                                            <ActionsMenu type={"Company"} id={company._id} />
+                                            <ActionsMenu type={"Company"} id={company.id} />
                                         </Td>
-                                        <Td>{company._id}</Td>
+                                        <Td>{company.id}</Td>
                                         <Td>{company.name}</Td>
                                         <Td>{company.position.coordinates[1]}</Td>
                                         <Td>{company.position.coordinates[0]}</Td>

@@ -10,7 +10,7 @@ import Delete from '../pages/modals/DeleteAlert';
 
 interface ActionsMenuProps {
     type: string;
-    id: string;
+    id: number;
 }
 
 const ActionsMenu: React.FC<ActionsMenuProps> = ({ type, id }) => {

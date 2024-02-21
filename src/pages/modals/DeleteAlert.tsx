@@ -8,7 +8,7 @@ import { useCompaniesStore } from '../../store/companies-store';
 
 interface DeleteProps {
     toDelete: string;
-    id: string;
+    id: number;
     isOpen: boolean;
     onClose: () => void;
 }
