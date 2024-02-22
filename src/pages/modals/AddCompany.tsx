@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast, Select } from '@chakra-ui/react';
+import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast, Select,
+NumberInput, NumberInputField } from '@chakra-ui/react';
 
 import { useCompaniesStore } from '../../store/companies-store';
 import { useForm } from 'react-hook-form';
@@ -64,21 +65,25 @@ const AddCompany: React.FC<AddCompanyProps> = ({ isOpen, onClose, id }) => {
                             </FormControl>
                             <FormControl>
                                 <FormLabel>Latitude</FormLabel>
-                                <Input
-                                    placeholder='Latitude'
-                                    defaultValue={thisCompany?.position.coordinates[0]}
-                                    type='number'
-                                    {...register("position.coordinates[0]", { required: true })}
-                                />
+                                <NumberInput>
+                                    <NumberInputField 
+                                        placeholder='Latitude'
+                                        defaultValue={thisCompany?.position.coordinates[0]}
+                                        type='number'
+                                        {...register("position.coordinates[0]", { required: true })}
+                                    />
+                                </NumberInput>
                             </FormControl>
                             <FormControl>
                                 <FormLabel>Longitude</FormLabel>
-                                <Input 
-                                    placeholder='Longitude'
-                                    defaultValue={thisCompany?.position.coordinates[1]}
-                                    type='number'
-                                    {...register("position.coordinates[1]", { required: true })}
-                                />
+                                <NumberInput>
+                                    <NumberInputField 
+                                        placeholder='Longitude'
+                                        defaultValue={thisCompany?.position.coordinates[1]}
+                                        type='number'
+                                        {...register("position.coordinates[1]", { required: true })}
+                                    />
+                                </NumberInput>
                             </FormControl>
                             <FormControl>
                                 <FormLabel>Category</FormLabel>

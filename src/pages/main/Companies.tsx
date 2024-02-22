@@ -62,7 +62,7 @@ const Companies: React.FC = () => {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                {companies.map((company) => (
+                                {companies.sort((a, b) => a.id - b.id).map((company) => (
                                     <Tr key={company.id}>
                                         <Td>
                                             <ActionsMenu type={"Company"} id={company.id} />

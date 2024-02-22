@@ -1,9 +1,13 @@
 import React from 'react';
 
-import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast } from '@chakra-ui/react';
+import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useToast,
+NumberInput, NumberInputField, Select } from '@chakra-ui/react';
 
 import { useCompaniesStore } from '../../store/companies-store';
 import { useForm } from 'react-hook-form';
+import { ECompanyCategory } from '../../client';
+
+const ComapniesEnumValues: ECompanyCategory[] = ['Consulting', 'Accelerator', 'Startup'];
 
 interface EditCompanyProps {
     isOpen: boolean;
@@ -60,29 +64,35 @@ const EditCompany: React.FC<EditCompanyProps> = ({ isOpen, onClose, id }) => {
                             </FormControl>
                             <FormControl>
                                 <FormLabel>Latitude</FormLabel>
-                                <Input
-                                    placeholder='Latitude'
-                                    defaultValue={thisCompany?.position.coordinates[0]}
-                                    type='number'
-                                    {...register("position.coordinates[0]", { required: true })}
-                                />
+                                <NumberInput defaultValue={thisCompany?.position.coordinates[0]}>
+                                    <NumberInputField 
+                                        placeholder='Latitude'
+                                        type='number'
+                                        {...register("position.coordinates[0]", { required: true })}
+                                    />
+                                </NumberInput>
                             </FormControl>
                             <FormControl>
                                 <FormLabel>Longitude</FormLabel>
-                                <Input 
-                                    placeholder='Longitude'
-                                    defaultValue={thisCompany?.position.coordinates[1]}
-                                    type='number'
-                                    {...register("position.coordinates[1]", { required: true })}
-                                />
+                                <NumberInput defaultValue={thisCompany?.position.coordinates[1]}>
+                                    <NumberInputField 
+                                        placeholder='Longitude'
+                                        type='number'
+                                        {...register("position.coordinates[1]", { required: true })}
+                                    />
+                                </NumberInput>
                             </FormControl>
                             <FormControl>
                                 <FormLabel>Category</FormLabel>
-                                <Input
-                                    placeholder='Category' 
+                                <Select
+                                    placeholder='Category'
                                     defaultValue={thisCompany?.category}
                                     {...register("category", { required: true })}
-                                />
+                                >
+                                    {ComapniesEnumValues.map((value) => (
+                                        <option key={value} value={value}>{value}</option>
+                                    ))}
+                                </Select>
                             </FormControl>
                             <FormControl>
                                 <FormLabel>Description</FormLabel>
