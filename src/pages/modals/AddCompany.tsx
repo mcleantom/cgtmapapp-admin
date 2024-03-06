@@ -125,7 +125,7 @@ const AddCompany: React.FC<AddCompanyProps> = ({ isOpen, onClose, id }) => {
                                 <FormLabel>Icon</FormLabel>
                                 <Input
                                     placeholder='Icon'
-                                    defaultValue={thisCompany?.icon}
+                                    defaultValue={thisCompany?.icon? thisCompany.icon : thisCompany?.logo}
                                     {...register("icon", { required: true })}
                                 />
                             </FormControl>
@@ -133,7 +133,7 @@ const AddCompany: React.FC<AddCompanyProps> = ({ isOpen, onClose, id }) => {
                                 <FormLabel>Banner Image</FormLabel>
                                 <Input
                                     placeholder='Banner Image'
-                                    defaultValue={thisCompany?.banner_image}
+                                    defaultValue={thisCompany?.banner_image? thisCompany.banner_image : thisCompany?.logo}
                                     {...register("banner_image", { required: true })}
                                 />
                             </FormControl>
