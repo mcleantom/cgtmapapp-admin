@@ -121,6 +121,22 @@ const AddCompany: React.FC<AddCompanyProps> = ({ isOpen, onClose, id }) => {
                                     {...register("logo", { required: true })}
                                 />
                             </FormControl>
+                            <FormControl>
+                                <FormLabel>Icon</FormLabel>
+                                <Input
+                                    placeholder='Icon'
+                                    defaultValue={thisCompany?.icon}
+                                    {...register("icon", { required: true })}
+                                />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Banner Image</FormLabel>
+                                <Input
+                                    placeholder='Banner Image'
+                                    defaultValue={thisCompany?.banner_image}
+                                    {...register("banner_image", { required: true })}
+                                />
+                            </FormControl>
                             {/* <FormErrorMessage>
                                 {errors.name && errors.name.message}
                             </FormErrorMessage> */}

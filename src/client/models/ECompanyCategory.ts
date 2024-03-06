@@ -3,4 +3,4 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type ECompanyCategory = 'Consulting' | 'Accelerator' | 'Startup';
+export type ECompanyCategory = 'Consulting' | 'Accelerator' | 'Startup' | 'University';

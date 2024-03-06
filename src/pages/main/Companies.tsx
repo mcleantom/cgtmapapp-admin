@@ -59,6 +59,8 @@ const Companies: React.FC = () => {
                                     <Th>Description</Th>
                                     <Th>Website</Th>
                                     <Th>Logo</Th>
+                                    <Th>Icon</Th>
+                                    <Th>Banner Image</Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
@@ -75,6 +77,8 @@ const Companies: React.FC = () => {
                                         <Td>{company.description}</Td>
                                         <Td>{company.website}</Td>
                                         <Td>{company.logo}</Td>
+                                        <Td>{company.icon}</Td>
+                                        <Td>{company.banner_image}</Td>
                                     </Tr>
                                 ))}
                             </Tbody>
