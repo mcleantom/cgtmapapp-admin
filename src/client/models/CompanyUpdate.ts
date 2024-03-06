@@ -13,5 +13,7 @@ export type CompanyUpdate = {
     description?: (string | null);
     website?: (string | null);
     logo?: (string | null);
+    icon?: (string | null);
+    banner_image?: (string | null);
 };
 

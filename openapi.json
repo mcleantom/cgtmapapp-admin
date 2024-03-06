@@ -224,6 +224,34 @@
             "minLength": 1,
             "format": "uri",
             "title": "Logo"
+          },
+          "icon": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1,
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Icon"
+          },
+          "banner_image": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1,
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Banner Image"
           }
         },
         "type": "object",
@@ -233,7 +261,9 @@
           "category",
           "description",
           "website",
-          "logo"
+          "logo",
+          "icon",
+          "banner_image"
         ],
         "title": "CompanyCreate"
       },
@@ -267,6 +297,34 @@
             "format": "uri",
             "title": "Logo"
           },
+          "icon": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1,
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Icon"
+          },
+          "banner_image": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1,
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Banner Image"
+          },
           "id": {
             "type": "integer",
             "title": "Id"
@@ -280,6 +338,8 @@
           "description",
           "website",
           "logo",
+          "icon",
+          "banner_image",
           "id"
         ],
         "title": "CompanyInDB"
@@ -355,6 +415,34 @@
               }
             ],
             "title": "Logo"
+          },
+          "icon": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1,
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Icon"
+          },
+          "banner_image": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1,
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Banner Image"
           }
         },
         "type": "object",
@@ -365,7 +453,8 @@
         "enum": [
           "Consulting",
           "Accelerator",
-          "Startup"
+          "Startup",
+          "University"
         ],
         "title": "ECompanyCategory"
       },

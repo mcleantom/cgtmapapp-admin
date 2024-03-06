@@ -13,6 +13,8 @@ export type CompanyInDB = {
     description: string;
     website: string;
     logo: string;
+    icon: (string | null);
+    banner_image: (string | null);
     id: number;
 };
 

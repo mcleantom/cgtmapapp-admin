@@ -58,5 +58,27 @@ export const $CompanyUpdate = {
                 type: 'null',
             }],
         },
+        icon: {
+            type: 'any-of',
+            contains: [{
+                type: 'string',
+                format: 'uri',
+                maxLength: 2083,
+                minLength: 1,
+            }, {
+                type: 'null',
+            }],
+        },
+        banner_image: {
+            type: 'any-of',
+            contains: [{
+                type: 'string',
+                format: 'uri',
+                maxLength: 2083,
+                minLength: 1,
+            }, {
+                type: 'null',
+            }],
+        },
     },
 } as const;

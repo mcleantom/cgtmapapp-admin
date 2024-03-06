@@ -34,6 +34,30 @@ export const $CompanyInDB = {
             maxLength: 2083,
             minLength: 1,
         },
+        icon: {
+            type: 'any-of',
+            contains: [{
+                type: 'string',
+                format: 'uri',
+                maxLength: 2083,
+                minLength: 1,
+            }, {
+                type: 'null',
+            }],
+            isRequired: true,
+        },
+        banner_image: {
+            type: 'any-of',
+            contains: [{
+                type: 'string',
+                format: 'uri',
+                maxLength: 2083,
+                minLength: 1,
+            }, {
+                type: 'null',
+            }],
+            isRequired: true,
+        },
         id: {
             type: 'number',
             isRequired: true,
